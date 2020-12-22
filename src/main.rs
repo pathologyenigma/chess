@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_mod_picking::{DebugPickingPlugin, PickingPlugin};
 use my_bevy_game::systems::*;
 
 fn main(){
