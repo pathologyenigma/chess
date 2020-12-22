@@ -6,7 +6,7 @@ mod knight;
 mod bishop;
 mod queen;
 mod pawn;
-pub fn create_pieces(commands:&mut Commands,
+fn create_pieces(commands:&mut Commands,
     asset_server: Res<AssetServer>,
     mut materials: ResMut<Assets<StandardMaterial>>
 ) {
@@ -74,4 +74,22 @@ pub struct Piece{
     pub piece_type: PieceType,
     pub x: u8,
     pub y: u8,
+}
+
+fn move_pieces(time: Res<Time>, mut query: Query<(&mut Transform,&Piece)>) {
+    for (mut transform, piece) in query.iter_mut() {
+        let direction = Vec3::new(piece.x as f32,0.,piece.y as f32) - transform.translation;
+        if direction.length() >0.1 {
+            transform.translation += direction.normalize() * time.delta_seconds();
+        }
+    }
+}
+
+pub struct PiecesPlugin;
+
+impl Plugin for PiecesPlugin {
+    fn build(&self, app: &mut AppBuilder) {
+        app.add_startup_system(create_pieces.system())
+        .add_system(move_pieces.system());
+    }
 }
