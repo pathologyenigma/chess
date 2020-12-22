@@ -15,15 +15,8 @@ fn main(){
     .run();
 }
 
-fn hello(commands:&mut Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>) {
-    commands.spawn(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Plane {size:8.0})),
-        material: materials.add(Color::rgb(1.,0.9,0.9).into()),
-        transform: Transform::from_translation(Vec3::new(4.,0.,4.)),
-        ..Default::default()
-    })
+fn hello(commands:&mut Commands) {
+    commands
     .spawn(Camera3dBundle {
         transform: Transform::from_matrix(Mat4::from_rotation_translation(
             Quat::from_xyzw(-0.3,-0.5,-0.3,0.5).normalize(),
@@ -37,17 +30,13 @@ fn hello(commands:&mut Commands,
     });
 }
 
-fn create_board(commands:&mut Commands) {
-    commands
-    .spawn(Camera3dBundle {
-        transform: Transform::from_matrix(Mat4::from_rotation_translation(
-            Quat::from_xyzw(-0.3, -0.5, -0.3, 0.5),
-            Vec3::new(-7.0,20.0,4.0),
-        )),
-        ..Default::default()
-    })
-    .spawn(LightBundle {
-        transform: Transform::from_translation(Vec3::new(4.0,8.0,4.0)),
+fn create_board(commands:&mut Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>) {
+    commands.spawn(PbrBundle {
+        mesh: meshes.add(Mesh::from(shape::Plane {size:8.0})),
+        material: materials.add(Color::rgb(1.,0.9,0.9).into()),
+        transform: Transform::from_translation(Vec3::new(4.,0.,4.)),
         ..Default::default()
     });
 }
