@@ -1,5 +1,7 @@
 pub mod board;
 pub mod pieces;
+use bevy_mod_picking::PickSource;
+
 use crate::*;
 pub fn setup(commands:&mut Commands) {
     commands
@@ -10,6 +12,7 @@ pub fn setup(commands:&mut Commands) {
         )),
         ..Default::default()
     })
+    .with(PickSource::default())
     .spawn(LightBundle {
         transform: Transform::from_translation(Vec3::new(4.0,8.0,4.0)),
         ..Default::default()

@@ -1,15 +1,27 @@
-use crate::*;
+use super::*;
 pub fn spawn_queen(
     commands:&mut Commands,
     material:Handle<StandardMaterial>,
     mesh: Handle<Mesh>,
-    position: Vec3,
+    piece_color: PieceColor,
+    position: (u8, u8),
 ){
     commands
     // Spawn parent entity
     .spawn(PbrBundle {
-        transform: Transform::from_translation(position),
+        transform: Transform::from_translation(Vec3::new(
+            position.0 as f32,
+            0.,
+            position.1 as f32
+        )),
         ..Default::default()
+    })
+    .with(
+        Piece {
+            color: piece_color,
+            piece_type: PieceType::Knight,
+            x: position.0,
+            y: position.1,
     })
         // Add children to the parent
     .with_children(|parent| {
