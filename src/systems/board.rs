@@ -28,8 +28,8 @@ impl Plugin for BoardPlugin {
         .add_startup_system(create_board.system())
         .add_system(color_squares.system())
         .add_system(select_square.system())
-        .add_system(move_piece.system())
         .add_system(select_piece.system())
+        .add_system(move_piece.system())
         .add_system(despawn_taken_pieces.system());
     }
 }
@@ -129,6 +129,7 @@ fn select_square(
         selected_piece.entity = None;
     }
 }
+
 fn select_piece(
     selected_square: ChangedRes<SelectedSquare>,
     mut selected_piece: ResMut<SelectedPiece>,
@@ -219,6 +220,7 @@ fn move_piece(
         selected_piece.entity = None;
     }
 }
+
 struct Taken;
 fn despawn_taken_pieces(
     commands: &mut Commands,
