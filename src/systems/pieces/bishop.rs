@@ -20,7 +20,7 @@ pub fn spawn_bishop(
     .with(
         Piece {
             color: piece_color,
-            piece_type: PieceType::Knight,
+            piece_type: PieceType::Bishop,
             x: position.0,
             y: position.1,
     })

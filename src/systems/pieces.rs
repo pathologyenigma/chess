@@ -52,13 +52,13 @@ fn create_pieces(commands:&mut Commands,
     }
 }
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq,Debug)]
 pub enum PieceColor {
     White,
     Black,
 }
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq,Debug)]
 pub enum PieceType {
     King,
     Queen,

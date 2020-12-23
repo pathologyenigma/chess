@@ -19,7 +19,7 @@ pub fn spawn_rook(
     .with(
         Piece {
             color: piece_color,
-            piece_type: PieceType::Knight,
+            piece_type: PieceType::Rook,
             x: position.0,
             y: position.1,
     })

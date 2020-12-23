@@ -19,7 +19,7 @@ pub fn spawn_pawn(
     .with(
         Piece {
             color: piece_color,
-            piece_type: PieceType::Knight,
+            piece_type: PieceType::Pawn,
             x: position.0,
             y: position.1,
     })

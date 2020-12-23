@@ -13,7 +13,7 @@ fn main(){
     })
     .add_plugins(DefaultPlugins)
     .add_plugin(PickingPlugin)
-    .add_plugin(DebugPickingPlugin)
+    //.add_plugin(DebugPickingPlugin)
     .add_plugin(board::BoardPlugin)
     .add_plugin(pieces::PiecesPlugin)
     .add_startup_system(setup.system())
