@@ -16,6 +16,7 @@ fn main(){
     //.add_plugin(DebugPickingPlugin)
     .add_plugin(board::BoardPlugin)
     .add_plugin(pieces::PiecesPlugin)
+    .add_plugin(ui::UIPlugin)
     .add_startup_system(setup.system())
     .run();
 }

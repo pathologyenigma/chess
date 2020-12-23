@@ -3,7 +3,7 @@ use systems::pieces::{Piece, PieceColor, PieceType};
 use super::gameplay::*;
 use crate::*;
 
-struct PlayerTurn(PieceColor);
+pub struct PlayerTurn(pub PieceColor);
 
 impl Default for PlayerTurn {
     fn default() -> Self {

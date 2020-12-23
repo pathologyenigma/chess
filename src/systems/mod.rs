@@ -1,6 +1,7 @@
 pub mod board;
 pub mod pieces;
 pub mod gameplay;
+pub mod ui;
 use bevy_mod_picking::PickSource;
 
 use crate::*;
