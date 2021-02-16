@@ -25,12 +25,14 @@ impl Plugin for BoardPlugin {
         app.init_resource::<SelectedSquare>()
         .init_resource::<SelectedPiece>()
         .init_resource::<PlayerTurn>()
+        .add_event::<ResetSelectedEvent>()
         .add_startup_system(create_board.system())
         .add_system(color_squares.system())
         .add_system(select_square.system())
-        .add_system(select_piece.system())
         .add_system(move_piece.system())
-        .add_system(despawn_taken_pieces.system());
+        .add_system(select_piece.system())
+        .add_system(despawn_taken_pieces.system())
+        .add_system(reset_selected.system());
     }
 }
 fn create_board(commands:&mut Commands,
@@ -164,11 +166,11 @@ fn select_piece(
 fn move_piece(
     commands: &mut Commands,
     selected_square: ChangedRes<SelectedSquare>,
-    mut selected_square_mut: ResMut<SelectedSquare>,
-    mut selected_piece: ResMut<SelectedPiece>,
+    selected_piece: Res<SelectedPiece>,
     mut turn: ResMut<PlayerTurn>,
     squares_query: Query<&Square>,
     mut pieces_query: Query<(Entity, &mut Piece)>,
+    mut reset_selected_event: ResMut<Events<ResetSelectedEvent>>,
 ) {
     let square_entity = if let Some(entity) = selected_square.entity {
         entity
@@ -195,7 +197,6 @@ fn move_piece(
             } else {
                 return;
             };
-
         if piece.is_move_valid((square.x, square.y), pieces_vec) {
             // Check if a piece of the opposite color exists in this square and despawn it
             for (other_entity, other_piece) in pieces_entity_vec {
@@ -207,7 +208,7 @@ fn move_piece(
                     commands.insert_one(other_entity, Taken);
                 }
             }
-
+            println!("now you at ({},{}), aim to move to ({},{})", piece.x, piece.y, square.x, square.y);
             // Move piece
             piece.x = square.x;
             piece.y = square.y;
@@ -216,7 +217,20 @@ fn move_piece(
             turn.change();
         }
 
-        selected_square_mut.entity = None;
+        reset_selected_event.send(ResetSelectedEvent);
+    }
+}
+
+struct ResetSelectedEvent;
+
+fn reset_selected(
+    mut event_reader: Local<EventReader<ResetSelectedEvent>>,
+    events: Res<Events<ResetSelectedEvent>>,
+    mut selected_square: ResMut<SelectedSquare>,
+    mut selected_piece: ResMut<SelectedPiece>,
+) {
+    for _event in event_reader.iter(&events) {
+        selected_square.entity = None;
         selected_piece.entity = None;
     }
 }
